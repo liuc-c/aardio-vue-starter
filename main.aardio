@@ -1,0 +1,65 @@
+//RUNAS//
+import win.ui;
+import win;
+/*DSG{{*/
+mainForm = win.form(text="剑网三小助手";right=799;bottom=499;border="none")
+mainForm.add()
+/*}}*/
+
+import web.view;
+theView  = web.view(mainForm); 
+
+// aardio导出函数
+loadcodex("\forms\aardioExportFun.aardio");
+
+
+
+import wsock.tcp.simpleHttpServer;
+
+/*
+如果导入 simpleHttpServer，则单个斜杠开头的路径会转换为嵌入式 HTTP 地址，
+如果同时文件名为 index.html ，则上级目录自动设为根目录，前端应用发布根目录使用默认的 "/" 即可，不需要改动。
+
+去掉下面的前端项目调试端口号 37161 或发布 EXE 后运行才会打开 "\web\index.html"。
+否则打开 http://localhost:37161
+*/
+//theView.go("\web\index.html",37161);
+theView.go("http://localhost:37161");
+
+
+// 禁止刷新、禁止F12
+theView.preloadScript(` 
+     document.onkeydown = function (e) {
+     	if (e.key == "F5" || 
+     	   (e.ctrlKey && e.key == "r") ||
+     	   e.key == "F12") {
+         	e.preventDefault(); 
+     	}
+     } `
+)
+
+//弹出新窗口触发
+theView.onNewWindow = function(url){
+	//耗时操作应返回异步自动执行的函数（提前结束 onNewWindow）
+	return function(){ 
+		//如果打开的是 file: 前缀网址，例如拖放文件到网页上。
+ 		var filePath = inet.url.getFilePath(url)
+ 		if(filePath){
+ 			mainForm.msgbox(filePath,"本地文件"); 	
+ 		}
+ 		else {
+ 		 	theView.go(url); 
+ 		} 
+ 	}
+}
+
+//添加阴影边框
+import win.ui.shadow;
+win.ui.shadow(mainForm);
+
+//设置窗口缩放范围
+import win.ui.minmax;
+win.ui.minmax(mainForm,800,500,1100,700);
+
+mainForm.show();
+win.loopMessage();

@@ -1,0 +1,16 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": [
+      "unplugin-vue-router/client"
+    ]
+  },
+  "include": ["env.d.ts", "aardio/index.d.ts", "src/**/*", "src/**/*.vue", "./typed-router.d.ts"],
+  "exclude": ["src/**/__tests__/*"]
+}

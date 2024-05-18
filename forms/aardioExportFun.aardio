@@ -1,0 +1,21 @@
+//导出为 JavaScript 中的 aardio 对象
+import win
+theView.external = {
+	// 关闭窗口
+    close = function(){
+    	mainForm.close();
+    };
+    // 拖动窗口
+    hitCaption = function(){
+    	mainForm.hitCaption();
+    };
+	// 最小化窗口
+    hitMin = function(){
+    	mainForm.hitMin();
+    };
+    // 置顶
+    setTopmost = function(isTopmost){
+     	win.setTopmost(mainForm.hwnd,isTopmost)
+     }
+     
+}
